@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KDJ Salon - Modern Beauty Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+    .three-canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans antialiased">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full bg-gray-800/80 backdrop-blur-md z-50 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <h1 class="text-2xl font-bold text-pink-400">KDJ Salon</h1>
+      <div class="space-x-8 text-pink-300 font-medium">
+        <a href="#home" class="hover:text-pink-500 transition">Home</a>
+        <a href="#services" class="hover:text-pink-500 transition">Services</a>
+        <a href="#about" class="hover:text-pink-500 transition">About</a>
+        <a href="#booking" class="hover:text-pink-500 transition">Book Now</a>
+        <a href="#contact" class="hover:text-pink-500 transition">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Three.js -->
+  <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="three-canvas" id="three-bg"></div>
+    <div class="text-center z-10">
+      <h2 class="text-5xl md:text-7xl font-extrabold text-pink-400 animate-fade-in">Welcome to KDJ Salon</h2>
+      <p class="text-xl md:text-2xl mt-4 text-gray-300 animate-fade-in-delay">Where elegance meets innovation</p>
+      <a href="#booking" class="mt-8 inline-block bg-pink-500 text-white px-8 py-3 rounded-full hover:bg-pink-600 transition transform hover:scale-105">Book Appointment</a>
+    </div>
+  </section>
+
+  <!-- Services Section with p5.js Animation -->
+  <section id="services" class="py-20 px-6 md:px-20 bg-gray-800 relative">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold text-pink-400 text-center mb-12">Our Premium Services</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-pink-500/20 transition transform hover:-translate-y-2">
+          <h3 class="text-xl font-semibold text-pink-400 mb-2">Hair Styling</h3>
+          <p class="text-gray-300">Trendy cuts, coloring, and updos crafted with precision.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-pink-500/20 transition transform hover:-translate-y-2">
+          <h3 class="text-xl font-semibold text-pink-400 mb-2">Facials</h3>
+          <p class="text-gray-300">Customized treatments for radiant, healthy skin.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-pink-500/20 transition transform hover:-translate-y-2">
+          <h3 class="text-xl font-semibold text-pink-400 mb-2">Bridal Makeup</h3>
+          <p class="text-gray-300">Flawless looks for your unforgettable day.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-pink-500/20 transition transform hover:-translate-y-2">
+          <h3 class="text-xl font-semibold text-pink-400 mb-2">Nail Art</h3>
+          <p class="text-gray-300">Stunning manicures and pedicures with artistic flair.</p>
+        </div>
+      </div>
+    </div>
+    <div id="p5-bg" class="absolute inset-0 opacity-20 pointer-events-none"></div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 px-6 md:px-20 bg-gray-900">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold text-pink-400 mb-6">About KDJ Salon</h2>
+      <p class="text-lg text-gray-300">Since 2015, KDJ Salon has been a sanctuary of beauty and relaxation. Our expert team blends modern techniques with timeless elegance, ensuring every client leaves feeling confident and renewed. We’re committed to sustainability, innovation, and your satisfaction.</p>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking" class="py-20 px-6 md:px-20 bg-gray-800">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold text-pink-400 text-center mb-6">Book Your Appointment</h2>
+      <div class="bg-gray-700 p-8 rounded-lg shadow-lg">
+        <div class="space-y-4">
+          <select class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400" onchange="updateSlots()">
+            <option value="">Select Service</option>
+            <option value="hair">Hair Styling</option>
+            <option value="facial">Facials</option>
+            <option value="bridal">Bridal Makeup</option>
+            <option value="nails">Nail Art</option>
+          </select>
+          <input type="date" class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400" onchange="updateSlots()">
+          <select id="time-slot" class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400">
+            <option value="">Select Time</option>
+          </select>
+          <button onclick="bookAppointment()" class="w-full bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition">Confirm Booking</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 px-6 md:px-20 bg-gray-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl font-bold text-pink-400 text-center mb-12">What Our Clients Say</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+          <p class="text-gray-300">"The best salon experience I’ve ever had! The staff is amazing."</p>
+          <p class="text-pink-400 mt-4 font-semibold">- Sarah K.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+          <p class="text-gray-300">"My bridal makeup was stunning. Thank you, KDJ!"</p>
+          <p class="text-pink-400 mt-4 font-semibold">- Emily R.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+          <p class="text-gray-300">"Love the modern vibe and top-notch service."</p>
+          <p class="text-pink-400 mt-4 font-semibold">- Mia T.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-6 md:px-20 bg-gray-800">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold text-pink-400 text-center mb-6">Get in Touch</h2>
+      <div class="space-y-4">
+        <input type="text" placeholder="Your Name" class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+        <input type="email" placeholder="Your Email" class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400" required>
+        <textarea placeholder="Your Message" rows="5" class="w-full bg-gray-600 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400" required></textarea>
+        <button onclick="submitContact()" class="w-full bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition">Send Message</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-center py-6 text-gray-400">
+    <p>© 2025 KDJ Salon. All rights reserved.</p>
+    <p>No. 123, Beauty Lane, Colombo | Open: Mon - Sat (9AM - 7PM)</p>
+    <p class="mt-2">Follow us: <a href="#" class="text-pink-400 hover:text-pink-500">Instagram</a> | <a href="#" class="text-pink-400 hover:text-pink-500">Facebook</a></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Three.js Background
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-bg'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    const geometry = new THREE.SphereGeometry(5, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xff69b4, wireframe: true });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+    camera.position.z = 15;
+    function animate() {
+      requestAnimationFrame(animate);
+      sphere.rotation.x += 0.01;
+      sphere.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // p5.js Background Animation
+    new p5(sketch => {
+      sketch.setup = () => {
+        let canvas = sketch.createCanvas(window.innerWidth, window.innerHeight);
+        canvas.parent('p5-bg');
+        sketch.background(0, 0, 0, 0);
+      };
+      sketch.draw = () => {
+        sketch.stroke(255, 105, 180, 50);
+        sketch.strokeWeight(2);
+        sketch.noFill();
+        sketch.ellipse(sketch.mouseX, sketch.mouseY, 50 + sketch.sin(sketch.frameCount * 0.05) * 20);
+      };
+    });
+
+    // Booking Logic
+    function updateSlots() {
+      const timeSlot = document.getElementById('time-slot');
+      timeSlot.innerHTML = '<option value="">Select Time</option>';
+      const times = ['9:00 AM', '11:00 AM', '1:00 PM', '3:00 PM', '5:00 PM'];
+      times.forEach(time => {
+        const option = document.createElement('option');
+        option.value = time;
+        option.text = time;
+        timeSlot.appendChild(option);
+      });
+    }
+
+    function bookAppointment() {
+      alert('Booking confirmed! We’ll send you a confirmation soon.');
+    }
+
+    function submitContact() {
+      alert('Thank you for your message! We’ll get back to you soon.');
+    }
+
+    // Tailwind Animation Classes
+    document.head.insertAdjacentHTML('beforeend', `
+      <style>
+        .animate-fade-in { animation: fadeIn 1s ease-in; }
+        .animate-fade-in-delay { animation: fadeIn 1s ease-in 0.5s both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      </style>
+    `);
+  </script>
+</body>
+</html>
